@@ -16,7 +16,6 @@ lines = open('movie_lines.txt', encoding='utf-8',
 convers = open('movie_conversations.txt', encoding='utf-8',
              errors='ignore').read().split('\n')
 
-
 # text preprocessing
 exchn = []
 for conver in convers:
@@ -46,7 +45,6 @@ for i in range(len(questions)):
         sorted_ans.append(answers[i])
 
 # Text cleaning
-
 def clean_text(txt):
     txt = txt.lower()
     txt = re.sub(r"i'm", "i am", txt)
@@ -73,16 +71,13 @@ for line in sorted_ques:
 for line in sorted_ans:
     clean_ans.append(clean_text(line))
 
-
 for i in range(len(clean_ans)):
     clean_ans[i] = ' '.join(clean_ans[i].split()[:11])
-
 
 
 # trimming
 clean_ans=clean_ans[:30000]
 clean_ques=clean_ques[:30000]
-
 
 # count vectorizer building
 word2count = {}
@@ -114,7 +109,6 @@ for word, count in word2count.items():
 for i in range(len(clean_ans)):
     clean_ans[i] = '<SOS> ' + clean_ans[i] + ' <EOS>'
 
-
 # Assign the unique number of these token .
 tokens = ['<PAD>', '<EOS>', '<OUT>', '<SOS>']
 x = len(vocab)
@@ -122,11 +116,8 @@ for token in tokens:
     vocab[token] = x
     x += 1
     
-    
-
 vocab['cameron'] = vocab['<PAD>']
 vocab['<PAD>'] = 0
-
 
 # inv answers dict biulding
 inv_vocab = {w:v for v, w in vocab.items()}
@@ -158,9 +149,6 @@ for line in clean_ans:
 encoder_inp = pad_sequences(encoder_inp, 13, padding='post', truncating='post')
 decoder_inp = pad_sequences(decoder_inp, 13, padding='post', truncating='post')
 
-
-
-
 decoder_final_output = []
 for i in decoder_inp:
     decoder_final_output.append(i[1:]) 
@@ -184,7 +172,6 @@ embed = Embedding(VOCAB_SIZE+1, output_dim=50,
                   input_length=13,
                   trainable=True                  
                   )
-
 
 enc_embed = embed(enc_inp)
 enc_lstm = LSTM(400, return_sequences=True, return_state=True)
@@ -211,7 +198,6 @@ model.compile(loss='categorical_crossentropy',metrics=['acc'],optimizer='adam')
 model.fit([encoder_inp, decoder_inp],decoder_final_output,epochs=30)
 
 ########################### Create the Interference model-############################
-
 
 #Encoder
 enc_model = Model([enc_inp], enc_states)
