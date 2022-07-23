@@ -304,22 +304,3 @@ while prepro1 != 'q':
 
     print("chatbot attention : ", decoded_translation )
     print("==============================================")  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
