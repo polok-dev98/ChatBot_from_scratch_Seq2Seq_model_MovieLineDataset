@@ -2,4 +2,3 @@
 
  Try more data and epochs for better result.
  
-# Enjoy !!!!!!!!!!!!
